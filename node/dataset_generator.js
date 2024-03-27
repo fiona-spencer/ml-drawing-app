@@ -24,6 +24,11 @@ fileNames.forEach(fn=>{
             student_name: student,
             student_id: session
         });
+
+        fs.writeFileSync(
+            constants.JSON_DIR+"/"+id+".json",
+            JSON.stringify(drawings[label])
+        );
         id++;
     }
 })
