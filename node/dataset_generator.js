@@ -1,3 +1,5 @@
+const draw=require('../common/draw.js');
+
 const constants={}
 
 constants.DATA_DIR="../data";
@@ -25,10 +27,18 @@ fileNames.forEach(fn=>{
             student_id: session
         });
 
+        const paths=drawings[label];
+
         fs.writeFileSync(
             constants.JSON_DIR+"/"+id+".json",
-            JSON.stringify(drawings[label])
+            JSON.stringify(paths)
         );
+
+        generateImageFile(
+            constants.IMG_DIR+"/"+id+".png",
+            paths
+        );
+
         id++;
     }
 })
@@ -36,3 +46,9 @@ fileNames.forEach(fn=>{
 fs.writeFileSync(constants.SAMPLES,
     JSON.stringify(samples)
 );
+
+function generateImageFile( outFile, paths){
+    draw.paths(ctx,paths);
+    const buffer=canvas.toBuffer("image/png");
+    fs.writeFileSync(outfile, buffer);
+}
